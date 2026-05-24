@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Android para iPhone — POC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <style>
+
+    .steps-carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .steps-track {
+      display: flex;
+      transition: transform .5s cubic-bezier(.4,0,.2,1);
+    }
+
+    .step-slide {
+      min-width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 100px 24px 120px;
+      gap: 48px;
+    }
+
+    .slide-inner {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 60px;
+      align-items: center;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .step-screenshot {
+      width: 100%;
+      border-radius: 24px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 24px 60px rgba(0,0,0,.6);
+      display: block;
+    }
+
+    .slide-text {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .slide-counter {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #30d158;
+    }
+
+    .slide-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      color: #f5f5f7;
+    }
+
+    .slide-desc {
+      font-size: 1rem;
+      color: #6e6e73;
+      line-height: 1.75;
+    }
+
+    /* Slide de encerramento */
+    .slide-ending {
+      text-align: center;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .slide-ending .ending-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      max-width: 600px;
+    }
+
+    .ending-icon {
+      font-size: 4rem;
+      margin-bottom: 8px;
+    }
+
+    .ending-title {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1.1;
+      color: #f5f5f7;
+    }
+
+    .ending-sub {
+      font-size: 1.1rem;
+      color: #6e6e73;
+      line-height: 1.7;
+    }
+
+    .ending-badge {
+      display: inline-block;
+      background: rgba(48,209,88,.12);
+      border: 1px solid rgba(48,209,88,.3);
+      color: #30d158;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 100px;
+    }
+
+    .carousel-nav {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 50;
+      background: rgba(0,0,0,.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 100px;
+      padding: 12px 24px;
+    }
+
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.07);
+      color: #f5f5f7;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s, opacity .2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(48,209,88,.25);
+      border-color: rgba(48,209,88,.5);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nav-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+
+    .dot.active {
+      background: #30d158;
+      transform: scale(1.3);
+    }
+
+    @media (max-width: 680px) {
+      .slide-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .step-screenshot {
+        max-width: 220px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="{{ url_for('static', filename='imagens/LOGO POC BRANCO.png') }}" 
+           alt="POC" style="height:60px;"/>
+    </a>
+  </nav>
+
+  <!-- INNER HERO -->
+  <div class="inner-hero">
+    <a href="/" class="inner-back">← Voltar</a>
+    <p class="inner-eyebrow">Android → iPhone</p>
+    <h1 class="inner-title">Transfira do Android para iPhone</h1>
+    <p class="inner-desc">O app gratuito "Mover para iOS" faz toda a migração para você — contatos, fotos, vídeos, mensagens, e-mail e muito mais.</p>
+  </div>
+
+  <!-- VIDEO -->
+  <section class="video-section">
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/RFpRhT0aYzs?rel=0&modestbranding=1"
+        title="Como transferir do Android para iPhone"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <!-- TÍTULO DOS PASSOS -->
+  <div style="text-align:center; padding: 60px 24px 0;">
+    <h2 style="font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; letter-spacing:-.03em;">Passo a passo</h2>
+    <p style="color:#6e6e73; margin-top:12px;">Use as setas para navegar entre os passos.</p>
+  </div>
+
+  <!-- CARROSSEL -->
+  <div class="steps-carousel">
+    <div class="steps-track" id="track">
+
+      <!-- ETAPA 01 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 1" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 01 de 09 — Baixe o app no Android</span>
+            <h2 class="slide-title">Comece pelo Android</h2>
+            <p class="slide-desc">No aparelho Android, baixe o aplicativo <strong style="color:#f5f5f7">Migrar para iOS</strong> na Google Play Store para iniciar a transferência.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 02 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 2" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 02 de 09 — Preparação</span>
+            <h2 class="slide-title">Antes de começar</h2>
+            <p class="slide-desc">Conecte ambos os aparelhos ao Wi-Fi, mantenha-os carregando e deixe o Android desbloqueado durante todo o processo.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 03 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 3" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 03 de 09 — Inicie o novo iPhone</span>
+            <h2 class="slide-title">Configure o novo iPhone</h2>
+            <p class="slide-desc">Ligue o novo iPhone e siga as etapas iniciais até encontrar a opção de transferência de dados.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 04 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 4" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 04 de 09 — Transferir do Android</span>
+            <h2 class="slide-title">Escolha a transferência do Android</h2>
+            <p class="slide-desc">Na tela "Apps e Dados", toque em <strong style="color:#f5f5f7">Migrar Dados do Android</strong> para continuar.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 05 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 5" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 05 de 09 — Código de Conexão</span>
+            <h2 class="slide-title">Conecte os dispositivos</h2>
+            <p class="slide-desc">O iPhone exibirá um código numérico. Digite esse código no aplicativo Migrar para iOS no Android.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 06 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 6" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 06 de 09 — Selecione o que deseja transferir</span>
+            <h2 class="slide-title">Escolha seus dados</h2>
+            <p class="slide-desc">Selecione fotos, contatos, mensagens, contas Google e outros conteúdos que deseja transferir para o novo iPhone.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 07 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 7" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 07 de 09 — Transferência em Andamento</span>
+            <h2 class="slide-title">Aguarde a transferência</h2>
+            <p class="slide-desc">Mantenha os aparelhos próximos e conectados até que a migração seja concluída.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 08 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 8" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 08 de 09 — Finalização no iPhone</span>
+            <h2 class="slide-title">Conclua a configuração</h2>
+            <p class="slide-desc">Após a transferência, finalize a configuração do iPhone e faça login com sua Conta Apple.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ETAPA 09 -->
+      <div class="step-slide">
+        <div class="slide-inner">
+          <img src="{{ url_for('static', filename='imagens/TELA ANDROID.png') }}" alt="Etapa 9" class="step-screenshot"/>
+          <div class="slide-text">
+            <span class="slide-counter">Etapa 09 de 09 — WhatsApp e Conferência Final</span>
+            <h2 class="slide-title">Confira seus aplicativos e conversas</h2>
+            <p class="slide-desc">Antes de apagar o Android, confirme que suas fotos, aplicativos, contas e conversas do WhatsApp foram transferidos corretamente.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ENCERRAMENTO -->
+      <div class="step-slide slide-ending">
+        <div class="ending-inner">
+          <span class="ending-badge">✓ Transferência concluída</span>
+          <div class="ending-icon">🎉</div>
+          <h2 class="ending-title">Seu novo iPhone começa aqui</h2>
+          <p class="ending-sub">Aproveite sua nova experiência Apple com a POC.</p>
+          <a href="/" style="margin-top:12px; display:inline-flex; align-items:center; gap:8px; background:rgba(48,209,88,.15); border:1px solid rgba(48,209,88,.3); color:#30d158; padding:12px 28px; border-radius:100px; font-size:.9rem; font-weight:600; text-decoration:none; transition:background .2s;">
+            Voltar ao início →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NAVEGAÇÃO FIXA -->
+  <div class="carousel-nav">
+    <button class="nav-btn" id="btnPrev" onclick="changeSlide(-1)" disabled>←</button>
+    <div class="nav-dots" id="dots"></div>
+    <button class="nav-btn" id="btnNext" onclick="changeSlide(1)">→</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 POC. Todos os direitos reservados. · <a href="/">Voltar ao início</a></p>
+  </footer>
+
+  <script>
+    const track = document.getElementById('track');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const dotsContainer = document.getElementById('dots');
+    const total = 10; // 9 etapas + encerramento
+    let current = 0;
+
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => goTo(i);
+      dotsContainer.appendChild(dot);
+    }
+
+    function goTo(index) {
+      current = index;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      document.querySelectorAll('.dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+      btnPrev.disabled = current === 0;
+      btnNext.disabled = current === total - 1;
+    }
+
+    function changeSlide(dir) {
+      goTo(current + dir);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') changeSlide(1);
+      if (e.key === 'ArrowLeft')  changeSlide(-1);
+    });
+
+    let startX = 0;
+    track.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    track.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+    });
+  </script>
+
+</body>
+</html>
