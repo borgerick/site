@@ -5,7 +5,15 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    return render_template("home.html")
+
+@app.route("/transferencia")
+def transferencia():
     return render_template("index.html")
+
+@app.route("/produtos")
+def produtos():
+    return render_template("home.html")
 
 @app.route("/iphone-para-iphone")
 def iphone_iphone():
