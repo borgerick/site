@@ -9,11 +9,19 @@ def home():
 
 @app.route("/transferencia")
 def transferencia():
-    return render_template("index.html")
+    return render_template("transfiraiphone.html")        
 
 @app.route("/produtos")
 def produtos():
-    return render_template("home.html")
+    return render_template("produtos.html")     
+
+@app.route("/conheca-a-poc")
+def conheca_a_poc():
+    return render_template("poc.html")          
+
+@app.route("/infos")
+def infos():
+    return render_template("infos.html")        
 
 @app.route("/iphone-para-iphone")
 def iphone_iphone():
@@ -21,11 +29,7 @@ def iphone_iphone():
 
 @app.route("/android-para-iphone")
 def android_iphone():
-    return render_template("android_iphone.html")
-
-@app.route("/conheca-a-poc")
-def conheca_poc():
-    return render_template("poc.html")
+    return render_template("android_iphone.html") 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))

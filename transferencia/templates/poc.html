@@ -26,17 +26,13 @@
       animation: scrollGallery 44s linear infinite;
     }
 
-    .gallery-track:hover {
-      animation-play-state: paused;
-    }
+    .gallery-track:hover { animation-play-state: paused; }
 
     .gallery-item {
       flex-shrink: 0;
       width: 300px;
       height: 300px;
-      border-radius: none;
       overflow: hidden;
-      border: none;
       box-shadow: 0 8px 30px rgba(0,0,0,.4);
     }
 
@@ -48,9 +44,7 @@
       transition: transform .4s ease;
     }
 
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
+    .gallery-item:hover img { transform: scale(1.05); }
 
     @keyframes scrollGallery {
       0%   { transform: translateX(0); }
@@ -80,6 +74,155 @@
       height: 100%;
       border: none;
     }
+
+    /* ---- EQUIPE DESTAQUE ---- */
+    .equipe-destaque {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+      border-top: 1px solid #1d1d1f;
+    }
+
+    .equipe-foto {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .equipe-foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform .6s ease;
+    }
+
+    .equipe-destaque:hover .equipe-foto img { transform: scale(1.03); }
+
+    .equipe-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 72px;
+      background: #0a0a0a;
+      gap: 20px;
+    }
+
+    .equipe-content .eyebrow {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #6e6e73;
+    }
+
+    .equipe-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.15;
+      color: #f5f5f7;
+    }
+
+    .equipe-content p {
+      font-size: .95rem;
+      color: #6e6e73;
+      line-height: 1.85;
+    }
+
+    /* ---- CARDS CONTATO ---- */
+    .contato-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .contato-title {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .contato-title .eyebrow {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #6e6e73;
+      margin-bottom: 12px;
+    }
+
+    .contato-title h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      color: #f5f5f7;
+    }
+
+    .contato-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: #111;
+      border: 1px solid #1d1d1f;
+      border-radius: 20px;
+      padding: 32px 28px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease,
+                  border-color .3s ease, box-shadow .3s ease;
+    }
+
+    .contato-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .contato-card:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .contato-card.instagram:hover { border-color: rgba(225,48,108,.4); }
+    .contato-card.whatsapp:hover  { border-color: rgba(37,211,102,.4); }
+
+    .contato-icon { font-size: 2.4rem; flex-shrink: 0; }
+
+    .contato-info h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #f5f5f7;
+    }
+
+    .contato-info p {
+      font-size: .88rem;
+      color: #6e6e73;
+      line-height: 1.5;
+    }
+
+    .contato-arrow {
+      margin-left: auto;
+      color: #6e6e73;
+      font-size: 1.1rem;
+      transition: transform .2s ease, color .2s ease;
+    }
+
+    .contato-card:hover .contato-arrow {
+      transform: translateX(4px);
+      color: #f5f5f7;
+    }
+
+    @media (max-width: 768px) {
+      .equipe-destaque { grid-template-columns: 1fr; }
+      .equipe-foto { height: 360px; }
+      .equipe-content { padding: 48px 28px; }
+    }
   </style>
 </head>
 <body>
@@ -100,11 +243,10 @@
     <p class="inner-desc">Somos uma empresa focada em tornar a tecnologia mais acessível. Nossa missão é ajudar pessoas a migrarem de aparelho sem perder nada e sem estresse.</p>
   </div>
 
-<!-- GALERIA INFINITA -->
+  <!-- GALERIA INFINITA -->
   <div class="gallery-section">
     <div class="gallery-track-wrap">
       <div class="gallery-track">
-        <!-- Fotos originais -->
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/1.png') }}" alt="Produto 1"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/2.png') }}" alt="Produto 2"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/3.png') }}" alt="Produto 3"/></div>
@@ -119,7 +261,6 @@
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/12.png') }}" alt="Produto 12"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/13.png') }}" alt="Produto 13"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/14.png') }}" alt="Produto 14"/></div>
-        <!-- Duplicadas para loop infinito -->
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/1.png') }}" alt="Produto 1"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/2.png') }}" alt="Produto 2"/></div>
         <div class="gallery-item"><img src="{{ url_for('static', filename='imagens/3.png') }}" alt="Produto 3"/></div>
@@ -141,7 +282,6 @@
   <!-- VIDEO -->
   <div class="poc-video-wrap">
     <div class="video-container">
-      <!-- Substitua pelo seu vídeo -->
       <iframe
         src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
         title="Conheça a POC"
@@ -151,33 +291,46 @@
     </div>
   </div>
 
-  <!-- POC CONTENT -->
-  <section class="poc-section">
-    <p>Trocar de celular pode ser uma experiência frustrante — dados perdidos, configurações do zero, horas de trabalho. A POC nasceu para resolver isso.</p>
-    <p>Criamos guias visuais, simples e diretos ao ponto para que qualquer pessoa, independente do nível de conhecimento, consiga realizar a transferência sozinha com confiança.</p>
-
-    <div class="poc-features">
-
-      <div class="poc-feature">
-        <div class="feat-icon">🎯</div>
-        <h3>Clareza</h3>
-        <p>Instruções simples, sem jargões técnicos. Feito para qualquer pessoa.</p>
-      </div>
-
-      <div class="poc-feature">
-        <div class="feat-icon">🎬</div>
-        <h3>Guia em vídeo</h3>
-        <p>Além do passo a passo escrito, mostramos tudo em vídeo para não restar dúvidas.</p>
-      </div>
-
-      <div class="poc-feature">
-        <div class="feat-icon">🔒</div>
-        <h3>Segurança</h3>
-        <p>Orientamos os métodos oficiais da Apple para garantir que seus dados cheguem intactos.</p>
-      </div>
-
+  <!-- EQUIPE -->
+  <div class="equipe-destaque">
+    <div class="equipe-foto">
+      <img src="{{ url_for('static', filename='imagens/ERICK NICO.png') }}" alt="Erick e Nico"/>
     </div>
-  </section>
+    <div class="equipe-content">
+      <p class="eyebrow">Nossa equipe</p>
+      <h2>Erick, Nico e Theo 🐾</h2>
+      <p>A POC nasceu da paixão de dois amigos pelo universo Apple. Erick e Nico se uniram com um objetivo simples: tornar a experiência Apple acessível para todo mundo, com atendimento próximo, honesto e sem complicação.</p>
+      <p>No dia a dia, a gente conta também com o Theo — nosso fiel companheiro de quatro patas que garante que o ambiente de trabalho nunca fique muito sério. 🐶</p>
+      <p>Mais do que vender produtos, queremos ser o ponto de confiança de quem quer entrar no ecossistema Apple ou evoluir dentro dele. <strong style="color:#f5f5f7">Apple também é pra ti.</strong></p>
+    </div>
+  </div>
+
+  <!-- CONTATO -->
+  <div class="contato-section">
+    <div class="contato-title">
+      <p class="eyebrow">Fale com a gente</p>
+      <h2>Entre em contato</h2>
+    </div>
+
+    <a href="https://wa.me/message/HXNYLLF2MGRIE1" target="_blank" class="contato-card whatsapp">
+      <span class="contato-icon">💬</span>
+      <div class="contato-info">
+        <h3>WhatsApp</h3>
+        <p>Atendimento rápido e personalizado. Tire suas dúvidas agora!</p>
+      </div>
+      <span class="contato-arrow">→</span>
+    </a>
+
+    <a href="https://www.instagram.com/poc.tec/" target="_blank" class="contato-card instagram">
+      <span class="contato-icon">📸</span>
+      <div class="contato-info">
+        <h3>Instagram</h3>
+        <p>Nos siga e fale pelo Direct. @poc.tec</p>
+      </div>
+      <span class="contato-arrow">→</span>
+    </a>
+
+  </div>
 
   <!-- FOOTER -->
   <footer>
@@ -188,13 +341,13 @@
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+          setTimeout(() => entry.target.classList.add('visible'), i * 150);
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.poc-feature').forEach(el => observer.observe(el));
+    document.querySelectorAll('.contato-card').forEach(el => observer.observe(el));
   </script>
 
 </body>

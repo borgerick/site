@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POC — Transferência de Celular</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+  <style>
+    .home-video-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .home-video-wrap .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #1d1d1f;
+      box-shadow: 0 40px 100px rgba(0,0,0,.7);
+    }
+
+    .home-video-wrap .video-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="{{ url_for('static', filename='imagens/LOGO POC BRANCO.png') }}" 
+           alt="POC" style="height:60px;"/>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Seu novo iPhone começa aqui</p>
+    <img src="{{ url_for('static', filename='imagens/LOGO POCTEC COLORIDO.png') }}" 
+         alt="Logo POC" class="hero-logo-img"/>
+    <p class="hero-sub">Transfira seus dados com segurança e sem complicação. Siga nosso guia passo a passo.</p>
+    <div class="scroll-hint">
+      <span>Saiba mais</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <div class="home-video-wrap">
+    <div class="video-container">
+      <!-- Substitua pelo seu vídeo -->
+      <iframe
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0&modestbranding=1"
+        title="POC — Transferência de Celular"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- SECTION LABEL -->
+  <div class="section-label">
+    <!-- COMECE AGORA -->
+  <div style="text-align:center; padding: 0 24px 80px;">
+    <span style="display:block; width:1px; height:48px; background: linear-gradient(to bottom, #6e6e73, transparent); margin: 0 auto 12px;"></span>
+    <p style="font-size:.78rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:#6e6e73;">Comece agora sua transferência</p> 
+  </div>
+    <h2>Por onde você quer começar?</h2>
+    <p>Escolha o seu cenário abaixo.</p>
+  </div>
+
+  <!-- CARDS -->
+  <section class="cards-section">
+    <div class="cards-grid">
+
+      <a href="/iphone-para-iphone" class="card card-ios">
+        <span class="card-icon">📱</span>
+        <span class="card-tag">iPhone → iPhone</span>
+        <h2 class="card-title">Transfira de iPhone para iPhone</h2>
+        <p class="card-desc">Use o Quick Start ou iCloud para mover todos os dados entre dois iPhones de forma rápida e segura.</p>
+        <span class="card-arrow">Ver orientações <span>→</span></span>
+      </a>
+
+      <a href="/android-para-iphone" class="card card-android">
+        <span class="card-icon">🔄</span>
+        <span class="card-tag">Android → iPhone</span>
+        <h2 class="card-title">Transfira do Android para iPhone</h2>
+        <p class="card-desc">Com o app "Mover para iOS" migre contatos, fotos, mensagens e apps com facilidade.</p>
+        <span class="card-arrow">Ver orientações <span>→</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 POC. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 120);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.card, .step-item, .poc-feature').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
